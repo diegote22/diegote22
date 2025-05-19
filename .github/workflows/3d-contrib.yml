@@ -1,0 +1,30 @@
+name: GitHub-Profile-3D-Contrib
+
+on:
+  schedule:
+    # Ejecuta la acción una vez al día a las 00:00 UTC
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+    # Permite ejecutar la acción manualmente desde la pestaña Actions
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: yoshi389111/github-profile-3d-contrib@0.7.1
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          username: ${{ github.repository_owner }}
+          # Opciones adicionales (puedes descomentarlas y ajustarlas si quieres personalizar)
+          # max_repos: 100
+          # setting_json: ./conf/custom_settings.json # Si creas un archivo de configuración personalizado
+          # contrib_colors: '#ff0000,#00ff00,#0000ff,#ffff00,#ff00ff' # Colores personalizados
+
+      - name: Commit and push
+        run: |
+          git config user.name "diegote22"
+          git config user.email "diegote_21_82@hotmail.com"
+          git add -A .
+          git commit -m "Generar gráfico 3D de contribuciones" || echo "No hay cambios para commitear"
+          git push
