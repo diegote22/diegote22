@@ -1,3 +1,4 @@
+# Nombre del workflow
 name: GitHub-Profile-3D-Contrib
 
 on:
@@ -10,21 +11,30 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    name: Generar gráfico 3D de contribuciones # Nombre descriptivo para el job
+    permissions:
+      contents: write # Permisos necesarios para que GITHUB_TOKEN pueda hacer push
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: yoshi389111/github-profile-3d-contrib@latest
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4 # Actualizado a la versión v4
+
+      - name: Generar perfil 3D de contribuciones
+        uses: yoshi389111/github-profile-3d-contrib@latest # Usas @latest para la versión más nueva. Considera @0.7.1 para mayor estabilidad.
         with:
-          github_token: ${{ secrets.GH_TOKEN }}
+          github_token: ${{ secrets.GH_TOKEN }} # Usar el GITHUB_TOKEN estándar
           username: ${{ github.repository_owner }}
           # Opciones adicionales (puedes descomentarlas y ajustarlas si quieres personalizar)
           # max_repos: 100
           # setting_json: ./conf/custom_settings.json # Si creas un archivo de configuración personalizado
           # contrib_colors: '#ff0000,#00ff00,#0000ff,#ffff00,#ff00ff' # Colores personalizados
 
-      - name: Commit and push
+      - name: Commit y push de los cambios
         run: |
-          git config user.name "diegote22"
-          git config user.email "diegote_21_82@hotmail.com"
+          git config user.name "diegote22" # Tu nombre de usuario para el commit
+          git config user.email "diegote_21_82@hotmail.com" # Tu email para el commit
+          # El siguiente comando añade todos los archivos modificados y nuevos.
+          # Considera ser más específico si la acción solo genera ciertos archivos (ej. git add profile-3d-contrib.svg)
           git add -A .
-          git commit -m "Generar gráfico 3D de contribuciones" || echo "No hay cambios para commitear"
+          git commit -m "Generar gráfico 3D de contribuciones (Automático)" || echo "No hay cambios para commitear"
           git push
