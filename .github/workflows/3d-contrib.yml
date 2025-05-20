@@ -20,9 +20,12 @@ jobs:
         uses: actions/checkout@v4 # Actualizado a la versión v4
 
       - name: Generar perfil 3D de contribuciones
-        uses: yoshi389111/github-profile-3d-contrib@latest # Usas @latest para la versión más nueva. Considera @0.7.1 para mayor estabilidad.
+        # Se recomienda usar una versión específica (ej. v0.7.1) en lugar de @latest para mayor estabilidad.
+        uses: yoshi389111/github-profile-3d-contrib@v0.7.1
         with:
-          github_token: ${{ secrets.GH_TOKEN }} # Usar el GITHUB_TOKEN estándar
+          # Usar el GITHUB_TOKEN estándar que provee GitHub Actions.
+          # Este token obtiene sus permisos del bloque 'permissions' definido a nivel del job.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           username: ${{ github.repository_owner }}
           # Opciones adicionales (puedes descomentarlas y ajustarlas si quieres personalizar)
           # max_repos: 100
@@ -31,8 +34,8 @@ jobs:
 
       - name: Commit y push de los cambios
         run: |
-          git config user.name "diegote22" # Tu nombre de usuario para el commit
-          git config user.email "diegote_21_82@hotmail.com" # Tu email para el commit
+          git config user.name "diegote22" 
+          git config user.email "diegote_21_82@hotmail.com" 
           # El siguiente comando añade todos los archivos modificados y nuevos.
           # Considera ser más específico si la acción solo genera ciertos archivos (ej. git add profile-3d-contrib.svg)
           git add -A .
