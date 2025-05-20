@@ -23,7 +23,7 @@ jobs:
         # Intentando con @master como paso de diagnóstico debido al error "Missing download info" con v0.7.1.
         # Si esto funciona, considera que @master puede ser inestable.
         # La versión estable recomendada sigue siendo v0.7.1 si se puede resolver el problema de descarga.
-        uses:  yoshi389111/github-profile-3d-contrib@v0.7.1
+        uses:  yoshi389111/github-profile-3d-contrib@master
         with:
           # Usar el GITHUB_TOKEN estándar que provee GitHub Actions.
           # Este token obtiene sus permisos del bloque 'permissions' definido a nivel del job.
